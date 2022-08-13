@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<%- include('./partials/head'); %>
+</head>
+<body>
+<header>
+<%- include('./partials/header'); %>
+</header>
+<main>
+<div class="w3-container w3-mobile w3-block w3-margin-top w3-padding">
+
+    <h1 class="w3-text w3-auto"> Nossa Loja </h1>
+    <ul>
+        <% docProd.forEach((loja)=> { %>
+            <div class="w3-container w3-display w3-bar-item w3-mobile w3-amber w3-border">
+                    <h3 class="w3-cell"><%= loja.prod %>.</h3>                
+                </div>
+                <h5 class="w3-cell"><%= loja.descricao %>.</h5>    
+                <h5 class="w3-cell"><%= loja.tamanho %>.</h5>    
+                <h5 class="w3-cell"><%= loja.preco %>.</h5>    
+            <%})%>
+    </ul>
+
+</div>
+</main>
+<footer>
+<%- include('./partials/footer'); %>
+</footer>
+</body>
+
+</html><h1></h1>

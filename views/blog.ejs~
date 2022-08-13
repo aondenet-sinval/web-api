@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<%- include('./partials/head'); %>
+</head>
+<body>
+<header>
+<%- include('./partials/header'); %>
+</header>
+<main>
+<div class="w3-container w3-mobile w3-block w3-margin-top w3-padding">
+
+    <h1 class="w3-text w3-auto"> Lista de postagens... </h1>
+    <ul>
+        <% docPost.forEach((bloger)=> { %>
+            <div class="w3-container w3-display w3-bar-item w3-mobile w3-amber w3-border">
+                    <h3 class="w3-cell"><%= bloger.title %>.</h3> 
+                     <h5 class="w3-cell"><%= bloger.conteudo %>.</h5>                   
+                </div>
+            <%})%>
+    </ul>
+
+</div>
+</main>
+<footer>
+<%- include('./partials/footer'); %>
+</footer>
+</body>
+
+</html>

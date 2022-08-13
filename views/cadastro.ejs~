@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<%- include('./partials/head'); %>
+</head>
+<body>
+<header>
+<%- include('./partials/header'); %>
+</header>
+<main>
+<div class="w3-container w3-mobile w3-block w3-margin-top w3-padding">
+
+    <h1 class="w3-text w3-auto">Cadastro de Produtos: </h1>
+        <form action="/cadastrar-produto" target="_blank">
+          <p><input class="w3-input w3-border" type="text" placeholder="Produto" name="prod" required></p>
+          <p><input class="w3-input w3-border" type="text" placeholder="Descrição" name="descricao" required></p>
+          <p><input class="w3-input w3-border" type="text" placeholder="Tamanho" name="tamanho" required></p>
+          <p><input class="w3-input w3-border" type="text" placeholder="Preço" name="preco" required></p>
+           <p><input type="submit" value="Salvar" /></p>
+        </form>
+      </div>
+
+</div>
+</main>
+<footer>
+<%- include('./partials/footer'); %>
+</footer>
+</body>
+
+</html><h1></h1>

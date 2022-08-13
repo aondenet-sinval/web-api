@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<%- include('./partials/head'); %>
+</head>
+<body>
+<header>
+<%- include('./partials/header'); %>
+</header>
+<main>
+<div class="w3-container w3-mobile w3-block w3-margin-top w3-padding">
+
+    <h1 class="w3-text w3-auto"> Lista de Usu&aacute;rios </h1>
+    <ul>
+        <% docs.forEach((user)=> { %>
+            <div class="w3-container w3-display w3-bar-item w3-mobile w3-amber w3-border">
+                    Nome: <%= user.name %>.
+                     Email: <%= user.email %>.
+                      Endereço: <%= user.endereco %>.
+                       Telefone: <%= user.telefone %>.
+                    
+                </div>
+            <%})%>
+    </ul>
+
+</div>
+</main>
+<footer>
+<%- include('./partials/footer'); %>
+</footer>
+</body>
+
+</html>

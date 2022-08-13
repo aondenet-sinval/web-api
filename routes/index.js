@@ -1,0 +1,154 @@
+var express = require('express');
+var router = express.Router();
+
+/* GET home page. original */
+
+router.get('/', function(req, res, next) {
+  res.render('index', { title: 'Api de Cadastro de Clientes' });
+});
+
+//GET Cadastro de produtos
+router.get('/cadastro', function(req, res, next) {
+  res.render('cadastro', { title: 'Cadastro de Produtos' });
+});
+
+//GET users
+router.get('/user', async (req, res) => {
+  const db = require("../dbcad");
+  const Users = db.Mongoose.model('customers', db.CustomerSchema, 'customers');
+
+  const docs = await Users.find({}).lean().exec();
+  res.render('user', { docs });
+});
+
+//Get Blog page
+router.get('/blog', async (req, res) => {
+  const db = require("../dbposts");
+  const Posts = db.Mongoose.model('posts', db.PostSchema, 'posts');
+
+  const docPost = await Posts.find({}).lean().exec();
+  res.render('blog', { docPost });
+});
+
+//Get Loja - Store
+router.get('/store', async (req, res) => {
+  const dbs = require("../dbloja");
+  const Prods = dbs.Mongoose.model('store', dbs.ProdSchema, 'store');
+
+  const docProd = await Prods.find({}).lean().exec();
+  res.render('store', { docProd });
+});
+
+/* GET all customers. */
+router.get('/customers', function (req, res, next) {
+    var db = require('../dbcad');
+    var Customer = db.Mongoose.model('customers', db.CustomerSchema, 'customers');
+    Customer.find({}).lean().exec(function(e,docs){
+       res.json(docs);
+       res.end();
+    });
+});
+
+/* GET ONE customers. */
+router.get('/customers/:id', function (req, res, next) {
+    var db = require('../dbcad');
+    var Customer = db.Mongoose.model('customers', db.CustomerSchema, 'customers');
+    Customer.find({ _id: req.params.id }).lean().exec(function (e, docs) {
+        res.json(docs);
+        res.end();
+    });
+});
+
+/* POST customers. */
+router.post('/customers/', function (req, res, next) {
+    var db = require('../dbcad');
+    var Customer = db.Mongoose.model('customers',
+    db.CustomerSchema, 'customers');
+    var newcustomer = new Customer({ name: req.body.name,
+      email: req.body.email,
+      endereco: req.body.endereco,
+      telefone: req.body.telefone });
+    newcustomer.save(function (err) {
+        if (err) {
+            res.status(500).json({ error: err.message });
+            res.end();
+            return;
+        }
+        res.json(newcustomer);
+        res.end();
+    });
+});
+//Cadastro via postman ou soap
+/*
+router.post('/cadastro', function (req, res, next) {
+    const dbp = require("../dbloja");
+    const Produto = dbp.Mongoose.model('store', dbp.ProdSchema, 'store');
+
+    var product = new Produto({ prod: req.body.prod,
+      descricao: req.body.descricao,
+      tamanho: req.body.tamanho,
+      preco: req.body.preco });
+    product.save(function (err) {
+        if (err) {
+            res.status(500).json({ error: err.message });
+            res.end();
+            return;
+        }
+        res.json(product);
+        res.end();
+    });
+});
+*/
+/* POST store => cadastro de produtos. */
+//cadastro via formulário
+router.post('/cadastro', async (req, res) => {
+
+  const prod = req.body.prod;
+  const descricao = req.body.descricao;
+  const tamanho = req.body.tamanho;
+  const preco = req.body.preco;
+
+  const dbp = require("../dbloja");
+  const Produto = dbp.Mongoose.model('store', dbp.ProdSchema, 'store');
+  const product = new Produto({ prod, descricao, tamanho, preco });
+
+  try {
+    await product.save();
+    res.redirect("/");
+  } catch (err) {
+    //next(err);
+  }
+});
+
+/* PUT ONE customer. */
+router.put('/customers/:id', function (req, res, next) {
+    var db = require('../dbcad');
+    var Customer = db.Mongoose.model('customers', db.CustomerSchema, 'customers');
+    Customer.findOneAndUpdate({ _id: req.params.id }, req.body, { upsert: true }, function (err, doc) {
+        if (err) {
+            res.status(500).json({ error: err.message });
+            res.end();
+            return;
+        }
+        res.json(req.body);
+        res.end();
+    });
+});
+
+/* DELETE ONE customer. */
+router.delete('/customers/:id', function (req, res, next) {
+    var db = require('../dbcad');
+    var Customer = db.Mongoose.model('customers', db.CustomerSchema, 'customers');
+    Customer.find({ _id: req.params.id }).remove(function (err) {
+        if (err) {
+            res.status(500).json({ error: err.message });
+            res.end();
+            return;
+        }
+        res.json({success: true});
+        res.end();
+    });
+});
+
+
+module.exports = router;
